@@ -1,0 +1,200 @@
+MariaDB [jabir]> create table clientmaster(clientno varchar(20), name varchar(25), address varchar(50), city varchar(50), pincode int, state varchar(20));
+
+
+MariaDB [jabir]> insert into clientmaster values('C0195', 'Jabir MJ', 'Koprakalam', 'Trissur', 680687, 'Kerala') ,('C0196', 'Thasni PA', 'Puthiyaveetil', 'Trissur', 680564, 'Kerala'), ('C0197', 'HariKrishnan', 'Cheratupadi', 'Aluva', 683171, 'Kerala'), ('CO198', 'Vaishak MV', 'Sringapuram', 'Kodungalloor', 680684, 'Kerala'), ('CO199', 'Reshama Ramesh', 'Thodupuzha', 'Idukki', 685584, 'Kerala');
+Query OK, 5 rows affected (0.43 sec)
+Records: 5  Duplicates: 0  Warnings: 0
+
+
+MariaDB [jabir]> select * from clientmaster;
++----------+----------------+---------------+--------------+---------+--------+
+| clientno | name           | address       | city         | pincode | state  |
++----------+----------------+---------------+--------------+---------+--------+
+| C0195    | Jabir MJ       | Koprakalam    | Trissur      |  680687 | Kerala |
+| C0196    | Thasni PA      | Puthiyaveetil | Trissur      |  680564 | Kerala |
+| C0197    | HariKrishnan   | Cheratupadi   | Aluva        |  683171 | Kerala |
+| CO198    | Vaishak MV     | Sringapuram   | Kodungalloor |  680684 | Kerala |
+| CO199    | Reshama Ramesh | Thodupuzha    | Idukki       |  685584 | Kerala |
++----------+----------------+---------------+--------------+---------+--------+
+5 rows in set (0.00 sec)
+
+MariaDB [jabir]> insert into clientmaster values('C0200', "Jaya", 'Chentrappinni', 'Trissur', 680687, 'Kerala');
+Query OK, 1 row affected (0.04 sec)
+
+MariaDB [jabir]> Select * from clientmaster;
++----------+----------------+---------------+--------------+---------+--------+
+| clientno | name           | address       | city         | pincode | state  |
++----------+----------------+---------------+--------------+---------+--------+
+| C0195    | Jabir MJ       | Koprakalam    | Trissur      |  680687 | Kerala |
+| C0196    | Thasni PA      | Puthiyaveetil | Trissur      |  680564 | Kerala |
+| C0197    | HariKrishnan   | Cheratupadi   | Aluva        |  683171 | Kerala |
+| CO198    | Vaishak MV     | Sringapuram   | Kodungalloor |  680684 | Kerala |
+| CO199    | Reshama Ramesh | Thodupuzha    | Idukki       |  685584 | Kerala |
+| C0200    | Jaya           | Chentrappinni | Trissur      |  680687 | Kerala |
++----------+----------------+---------------+--------------+---------+--------+
+6 rows in set (0.00 sec)
+
+
+MariaDB [jabir]> select clientno, name from clientmaster;
++----------+----------------+
+| clientno | name           |
++----------+----------------+
+| C0195    | Jabir MJ       |
+| C0196    | Thasni PA      |
+| C0197    | HariKrishnan   |
+| CO198    | Vaishak MV     |
+| CO199    | Reshama Ramesh |
+| C0200    | Jaya           |
++----------+----------------+
+6 rows in set (0.00 sec)
+
+
+MariaDB [jabir]> select distinct(name) from clientmaster;
++----------------+
+| name           |
++----------------+
+| Jabir MJ       |
+| Thasni PA      |
+| HariKrishnan   |
+| Vaishak MV     |
+| Reshama Ramesh |
+| Jaya           |
++----------------+
+6 rows in set (0.00 sec)
+
+
+MariaDB [jabir]> select clientno, name, address, city from clientmaster order by clientno;
++----------+----------------+---------------+--------------+
+| clientno | name           | address       | city         |
++----------+----------------+---------------+--------------+
+| C0195    | Jabir MJ       | Koprakalam    | Trissur      |
+| C0196    | Thasni PA      | Puthiyaveetil | Trissur      |
+| C0197    | HariKrishnan   | Cheratupadi   | Aluva        |
+| C0198    | Vaishak MV     | Sringapuram   | Kodungalloor |
+| C0199    | Reshama Ramesh | Thodupuzha    | Idukki       |
+| C0200    | Jaya           | Chentrappinni | Trissur      |
++----------+----------------+---------------+--------------+
+6 rows in set (0.00 sec)
+
+MariaDB [jabir]> select clientno, name, address, city from clientmaster order by clientno DESC;
++----------+----------------+---------------+--------------+
+| clientno | name           | address       | city         |
++----------+----------------+---------------+--------------+
+| C0200    | Jaya           | Chentrappinni | Trissur      |
+| C0199    | Reshama Ramesh | Thodupuzha    | Idukki       |
+| C0198    | Vaishak MV     | Sringapuram   | Kodungalloor |
+| C0197    | HariKrishnan   | Cheratupadi   | Aluva        |
+| C0196    | Thasni PA      | Puthiyaveetil | Trissur      |
+| C0195    | Jabir MJ       | Koprakalam    | Trissur      |
++----------+----------------+---------------+--------------+
+6 rows in set (0.00 sec)
+
+
+
+MariaDB [jabir]> select clientno, name from clientmaster where clientno = 'C0200';
++----------+------+
+| clientno | name |
++----------+------+
+| C0200    | Jaya |
++----------+------+
+1 row in set (0.01 sec)
+
+
+MariaDB [jabir]> Alter table clientmaster add telephone long;
+Query OK, 0 rows affected (0.37 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+MariaDB [jabir]> alter table clientmaster add faxno int;
+Query OK, 0 rows affected (0.40 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+
+MariaDB [jabir]> update clientmaster set telephone = case clientnno
+    -> when 'C0195' then 7907523150
+    -> when 'C0196' then 9567085607
+    -> when 'C0197' then 8921952612
+    -> when 'C0198' then 6282347034
+    -> when 'C0199' then 8137847807
+    -> when 'C0200' then 9999999999
+    -> else 1111111111
+    -> end;
+
+
+MariaDB [jabir]> select * from clientmaster;
++----------+----------------+---------------+--------------+---------+--------+------------+-------+
+| clientno | name           | address       | city         | pincode | state  | telephone  | faxno |
++----------+----------------+---------------+--------------+---------+--------+------------+-------+
+| C0195    | Jabir MJ       | Koprakalam    | Trissur      |  680687 | Kerala | 7907523150 |  NULL |
+| C0196    | Thasni PA      | Puthiyaveetil | Trissur      |  680564 | Kerala | 9567085607 |  NULL |
+| C0197    | HariKrishnan   | Cheratupadi   | Aluva        |  683171 | Kerala | 8921952612 |  NULL |
+| C0198    | Vaishak MV     | Sringapuram   | Kodungalloor |  680684 | Kerala | 6282347034 |  NULL |
+| C0199    | Reshama Ramesh | Thodupuzha    | Idukki       |  685584 | Kerala | 8137847807 |  NULL |
+| C0200    | Jaya           | Chentrappinni | Trissur      |  680687 | Kerala | 9999999999 |  NULL |
++----------+----------------+---------------+--------------+---------+--------+------------+-------+
+6 rows in set (0.00 sec)
+
+
+
+MariaDB [jabir]> update clientmaster set faxno = case clientno when 'C0195' then 123 when 'C0196' then 234 when 'C0197' then 345 when 'C0198' then 456 when 'C0199' then 567 when 'C0200' then 678 end;
+Query OK, 6 rows affected (0.43 sec)
+Rows matched: 6  Changed: 6  Warnings: 0
+
+MariaDB [jabir]> select * from clientmaster;
++----------+----------------+---------------+--------------+---------+--------+------------+-------+
+| clientno | name           | address       | city         | pincode | state  | telephone  | faxno |
++----------+----------------+---------------+--------------+---------+--------+------------+-------+
+| C0195    | Jabir MJ       | Koprakalam    | Trissur      |  680687 | Kerala | 7907523150 |   123 |
+| C0196    | Thasni PA      | Puthiyaveetil | Trissur      |  680564 | Kerala | 9567085607 |   234 |
+| C0197    | HariKrishnan   | Cheratupadi   | Aluva        |  683171 | Kerala | 8921952612 |   345 |
+| C0198    | Vaishak MV     | Sringapuram   | Kodungalloor |  680684 | Kerala | 6282347034 |   456 |
+| C0199    | Reshama Ramesh | Thodupuzha    | Idukki       |  685584 | Kerala | 8137847807 |   567 |
+| C0200    | Jaya           | Chentrappinni | Trissur      |  680687 | Kerala | 9999999999 |   678 |
++----------+----------------+---------------+--------------+---------+--------+------------+-------+
+6 rows in set (0.00 sec)
+
+
+MariaDB [jabir]> desc clientmaster;
++-----------+-------------+------+-----+---------+-------+
+| Field     | Type        | Null | Key | Default | Extra |
++-----------+-------------+------+-----+---------+-------+
+| clientno  | varchar(20) | YES  |     | NULL    |       |
+| name      | varchar(25) | YES  |     | NULL    |       |
+| address   | varchar(50) | YES  |     | NULL    |       |
+| city      | varchar(50) | YES  |     | NULL    |       |
+| pincode   | int(11)     | YES  |     | NULL    |       |
+| state     | varchar(20) | YES  |     | NULL    |       |
+| telephone | mediumtext  | YES  |     | NULL    |       |
+| faxno     | int(11)     | YES  |     | NULL    |       |
++-----------+-------------+------+-----+---------+-------+
+8 rows in set (0.06 sec)
+
+
+MariaDB [jabir]> alter table clientmaster modify faxno varchar(20);
+Query OK, 6 rows affected (0.67 sec)               
+Records: 6  Duplicates: 0  Warnings: 0
+
+
+MariaDB [jabir]> desc clientmaster;
++-----------+-------------+------+-----+---------+-------+
+| Field     | Type        | Null | Key | Default | Extra |
++-----------+-------------+------+-----+---------+-------+
+| clientno  | varchar(20) | YES  |     | NULL    |       |
+| name      | varchar(25) | YES  |     | NULL    |       |
+| address   | varchar(50) | YES  |     | NULL    |       |
+| city      | varchar(50) | YES  |     | NULL    |       |
+| pincode   | int(11)     | YES  |     | NULL    |       |
+| state     | varchar(20) | YES  |     | NULL    |       |
+| telephone | mediumtext  | YES  |     | NULL    |       |
+| faxno     | varchar(20) | YES  |     | NULL    |       |
++-----------+-------------+------+-----+---------+-------+
+8 rows in set (0.01 sec)
+
+
+MariaDB [jabir]> drop table clientmaster;
+Query OK, 0 rows affected (0.69 sec)
+
+
+
+
+
+
