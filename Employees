@@ -1,0 +1,210 @@
+MariaDB [jabir]> Create table employees(
+    -> emp_id int PRIMARY KEY AUTO_INCREMENT,
+    -> first_name varchar(25),
+    -> last_name varchar(25),
+    -> email varchar(50),
+    -> phone_number long,
+    -> hire_date date,
+    -> salary int
+    -> );
+Query OK, 0 rows affected (0.28 sec)
+
+
+MariaDB [jabir]> Create table jobs(
+    -> job_id int PRIMARY KEY AUTO_INCREMENT,
+    -> job_title varchar(30),
+    -> min_salary double,
+    -> max_salary double
+    -> );
+Query OK, 0 rows affected (0.25 sec)
+
+MariaDB [jabir]> create table departments(
+    -> department_id int PRIMARY KEY AUTO_INCREMENT,
+    -> department_name varchar(30)
+    -> );
+Query OK, 0 rows affected (0.24 sec)
+
+MariaDB [jabir]> show tables;
++-----------------+
+| Tables_in_jabir |
++-----------------+
+| departments     |
+| employee        |
+| employees       |
+| jobs            |
++-----------------+
+4 rows in set (0.00 sec)
+
+
+
+
+
+
+MariaDB [jabir]> Alter table employees add FOREIGN KEY (job_id) int  REFERENCES jobs(job_id);
+
+
+
+MariaDB [jabir]> Alter table employees add FOREIGN KEY (job_id) REFERENCES jobs(job_id);
+Query OK, 0 rows affected (1.28 sec)               
+Records: 0  Duplicates: 0  Warnings: 0
+
+
+MariaDB [jabir]> Alter table employees add FOREIGN KEY (manager_id) REFERENCES employees(emp_id);
+Query OK, 0 rows affected (1.17 sec)               
+Records: 0  Duplicates: 0  Warnings: 0
+
+MariaDB [jabir]> Describe employees
+    -> ;
++---------------+-------------+------+-----+---------+----------------+
+| Field         | Type        | Null | Key | Default | Extra          |
++---------------+-------------+------+-----+---------+----------------+
+| emp_id        | int(11)     | NO   | PRI | NULL    | auto_increment |
+| first_name    | varchar(25) | YES  |     | NULL    |                |
+| last_name     | varchar(25) | YES  |     | NULL    |                |
+| email         | varchar(50) | YES  |     | NULL    |                |
+| phone_number  | mediumtext  | YES  |     | NULL    |                |
+| hire_date     | date        | YES  |     | NULL    |                |
+| job_id        | int(11)     | YES  | MUL | NULL    |                |
+| salary        | int      | YES  |     | NULL    |                |
+| manager_id    | int(11)     | YES  | MUL | NULL    |                |
+| department_id | int(11)     | YES  | MUL | NULL    |                |
++---------------+-------------+------+-----+---------+----------------+
+10 rows in set (0.02 sec)
+
+
+
+MariaDB [jabir]> Alter table departments rename to dept;
+Query OK, 0 rows affected (0.11 sec)
+
+MariaDB [jabir]> Alter table employees modify salary smallint;
+Query OK, 0 rows affected (0.65 sec)               
+Records: 0  Duplicates: 0  Warnings: 0
+
+
+MariaDB [jabir]> alter table employees add commission int;
+Query OK, 0 rows affected (0.48 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+
+MariaDB [jabir]> alter table employees drop hire_date;
+Query OK, 0 rows affected (0.44 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+
+
+
+MariaDB [jabir]> desc employees;
++---------------+-------------+------+-----+---------+----------------+
+| Field         | Type        | Null | Key | Default | Extra          |
++---------------+-------------+------+-----+---------+----------------+
+| emp_id        | int(11)     | NO   | PRI | NULL    | auto_increment |
+| first_name    | varchar(25) | YES  |     | NULL    |                |
+| last_name     | varchar(25) | YES  |     | NULL    |                |
+| email         | varchar(50) | YES  |     | NULL    |                |
+| phone_number  | mediumtext  | YES  |     | NULL    |                |
+| job_id        | int(11)     | YES  | MUL | NULL    |                |
+| salary        | smallint(6) | YES  |     | NULL    |                |
+| manager_id    | int(11)     | YES  | MUL | NULL    |                |
+| department_id | int(11)     | YES  | MUL | NULL    |                |
+| commission    | int(11)     | YES  |     | NULL    |                |
++---------------+-------------+------+-----+---------+----------------+
+10 rows in set (0.00 sec)
+
+
+
+MariaDB [jabir]> insert into jobs values
+    -> (1, 'Manager', 15000, 100000),
+    -> (2, 'UX Developer', 25000, 50000),
+    -> (3, 'Data Scientist', 50000, 150000),
+    -> (4, 'Developer', 10000, 70000),
+    -> (5, 'Data Analyst', 25000, 100000);
+Query OK, 5 rows affected (0.43 sec)
+Records: 5  Duplicates: 0  Warnings: 0
+
+MariaDB [jabir]> 
+MariaDB [jabir]> select * from jobs;
++--------+----------------+------------+------------+
+| job_id | job_title      | min_salary | max_salary |
++--------+----------------+------------+------------+
+|      1 | Manager        |      15000 |     100000 |
+|      2 | UX Developer   |      25000 |      50000 |
+|      3 | Data Scientist |      50000 |     150000 |
+|      4 | Developer      |      10000 |      70000 |
+|      5 | Data Analyst   |      25000 |     100000 |
++--------+----------------+------------+------------+
+5 rows in set (0.00 sec)
+
+
+
+MariaDB [jabir]> insert into dept values
+    -> (1, 'IT'),
+    -> (2, 'Management'),
+    -> (3, 'Customer care'),
+    -> (4, 'Sales'),
+    -> (5, 'Purchase');
+Query OK, 5 rows affected (0.03 sec)
+Records: 5  Duplicates: 0  Warnings: 0
+
+MariaDB [jabir]> select * from dept;
++---------------+-----------------+
+| department_id | department_name |
++---------------+-----------------+
+|             1 | IT              |
+|             2 | Management      |
+|             3 | Customer care   |
+|             4 | Sales           |
+|             5 | Purchase        |
++---------------+-----------------+
+5 rows in set (0.00 sec)
+
+
+MariaDB [jabir]> insert into employees values (1, 'Jabir', 'MJ', 'jabirmj1@gmail.com', 7907523150, 1, 1000000, NULL, 1, 10000);
+(2, 'Hari', 'Krishnan', 'harikrishnanambat@gmail.com', 9999999999, 1, 700000, 1, 1, 25000), (3, 'Thasni', 'PA', 'thasni@gmail.com', 8888888888, 1, 800000, 2, 2, 20000),(4, 'Vaisakh', 'MV', 'vaisakhp43@gmail.com', 7777777777, 1, 800000, 3, 3, 50000),(5, 'Reshma', 'Ramesh', 'reshma@gmail.com', 6666666666, 1, 900000, 1, 1, 10000);
+
+Query OK, 3 rows affected, 3 warnings (0.43 sec)
+Records: 3  Duplicates: 0  Warnings: 3
+
+
+MariaDB [jabir]> select * from employees;
++--------+------------+-----------+-----------------------------+--------------+--------+--------+------------+---------------+------------+
+| emp_id | first_name | last_name | email                       | phone_number | job_id | salary | manager_id | department_id | commission |
++--------+------------+-----------+-----------------------------+--------------+--------+--------+------------+---------------+------------+
+|      1 | Jabir      | MJ        | jabirmj1@gmail.com          | 7907523150   |      1 |  32767 |       NULL |             1 |      10000 |
+|      2 | Hari       | Krishnan  | harikrishnanambat@gmail.com | 9999999999   |      1 |  32767 |          1 |             1 |      25000 |
+|      3 | Thasni     | PA        | thasni@gmail.com            | 8888888888   |      1 |  32767 |          2 |             2 |      20000 |
+|      4 | Vaisakh    | MV        | vaisakhp43@gmail.com        | 7777777777   |      1 |  32767 |          3 |             3 |      50000 |
+|      5 | Reshma     | Ramesh    | reshma@gmail.com            | 6666666666   |      1 |  32767 |          1 |             1 |      10000 |
++--------+------------+-----------+-----------------------------+--------------+--------+--------+------------+---------------+------------+
+5 rows in set (0.00 sec)
+
+
+SELECT * from employees Left Join jobs on jobs.job_id = employees.job_id Left Join dept on dept.department_id = employees.department_id;
+
+
+MariaDB [jabir]> SELECT * from employees Left Join jobs on jobs.job_id = employees.job_id Left Join dept on dept.department_id = employees.department_id;
++--------+------------+-----------+-----------------------------+--------------+--------+--------+------------+---------------+------------+--------+-----------+------------+------------+---------------+-----------------+
+| emp_id | first_name | last_name | email                       | phone_number | job_id | salary | manager_id | department_id | commission | job_id | job_title | min_salary | max_salary | department_id | department_name |
++--------+------------+-----------+-----------------------------+--------------+--------+--------+------------+---------------+------------+--------+-----------+------------+------------+---------------+-----------------+
+|      1 | Jabir      | MJ        | jabirmj1@gmail.com          | 7907523150   |      1 |  32767 |       NULL |             1 |      10000 |      1 | Manager   |      15000 |     100000 |             1 | IT              |
+|      2 | Hari       | Krishnan  | harikrishnanambat@gmail.com | 9999999999   |      1 |  32767 |          1 |             1 |      25000 |      1 | Manager   |      15000 |     100000 |             1 | IT              |
+|      3 | Thasni     | PA        | thasni@gmail.com            | 8888888888   |      1 |  32767 |          2 |             2 |      20000 |      1 | Manager   |      15000 |     100000 |             2 | Management      |
+|      4 | Vaisakh    | MV        | vaisakhp43@gmail.com        | 7777777777   |      1 |  32767 |          3 |             3 |      50000 |      1 | Manager   |      15000 |     100000 |             3 | Customer care   |
+|      5 | Reshma     | Ramesh    | reshma@gmail.com            | 6666666666   |      1 |  32767 |          1 |             1 |      10000 |      1 | Manager   |      15000 |     100000 |             1 | IT              |
++--------+------------+-----------+-----------------------------+--------------+--------+--------+------------+---------------+------------+--------+-----------+------------+------------+---------------+-----------------+
+5 rows in set (0.39 sec)
+
+
+MariaDB [jabir]> delete from employees where emp_id = 4;
+Query OK, 1 row affected (0.08 sec)
+
+MariaDB [jabir]> select * from employees;
++--------+------------+-----------+-----------------------------+--------------+--------+--------+------------+---------------+------------+
+| emp_id | first_name | last_name | email                       | phone_number | job_id | salary | manager_id | department_id | commission |
++--------+------------+-----------+-----------------------------+--------------+--------+--------+------------+---------------+------------+
+|      1 | Jabir      | MJ        | jabirmj1@gmail.com          | 7907523150   |      1 |  32767 |       NULL |             1 |      10000 |
+|      2 | Hari       | Krishnan  | harikrishnanambat@gmail.com | 9999999999   |      1 |  32767 |          1 |             1 |      25000 |
+|      3 | Thasni     | PA        | thasni@gmail.com            | 8888888888   |      1 |  32767 |          2 |             2 |      20000 |
+|      5 | Reshma     | Ramesh    | reshma@gmail.com            | 6666666666   |      1 |  32767 |          1 |             1 |      10000 |
++--------+------------+-----------+-----------------------------+--------------+--------+--------+------------+---------------+------------+
+4 rows in set (0.00 sec)
+
