@@ -208,3 +208,17 @@ MariaDB [jabir]> select * from employees;
 +--------+------------+-----------+-----------------------------+--------------+--------+--------+------------+---------------+------------+
 4 rows in set (0.00 sec)
 
+
+
+MariaDB [jabir]> select first_name from employees where salary>30000;
++------------+
+| first_name |
++------------+
+| Jabir      |
+| Hari       |
+| Thasni     |
+| Reshma     |
++------------+
+4 rows in set (0.00 sec)
+
+
