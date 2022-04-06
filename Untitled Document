@@ -1,0 +1,72 @@
+MariaDB [jabir]> create table customer(c_id int PRIMARY KEY AUTO_INCREMENT, c_name varchar(30), salary int);
+Query OK, 0 rows affected (0.22 sec)
+
+MariaDB [jabir]> start transaction;
+Query OK, 0 rows affected (0.00 sec)
+
+MariaDB [jabir]> set autocommit=0;
+Query OK, 0 rows affected (0.00 sec)
+
+MariaDB [jabir]> insert into customer values(1, 'JabirMJ', 10000),(2, 'Vaishak', 20000);
+Query OK, 2 rows affected (0.02 sec)
+Records: 2  Duplicates: 0  Warnings: 0
+
+MariaDB [jabir]> commit;
+Query OK, 0 rows affected (0.04 sec)
+
+MariaDB [jabir]> select * from customer;
++------+---------+--------+
+| c_id | c_name  | salary |
++------+---------+--------+
+|    1 | JabirMJ |  10000 |
+|    2 | Vaishak |  20000 |
++------+---------+--------+
+2 rows in set (0.00 sec)
+
+MariaDB [jabir]> delete from customer where c_id=1;
+Query OK, 1 row affected (0.00 sec)
+
+MariaDB [jabir]> select * from customer;
++------+---------+--------+
+| c_id | c_name  | salary |
++------+---------+--------+
+|    2 | Vaishak |  20000 |
++------+---------+--------+
+1 row in set (0.00 sec)
+
+MariaDB [jabir]> rollback;
+Query OK, 0 rows affected (0.08 sec)
+
+MariaDB [jabir]> select * from customer;
++------+---------+--------+
+| c_id | c_name  | salary |
++------+---------+--------+
+|    1 | JabirMJ |  10000 |
+|    2 | Vaishak |  20000 |
++------+---------+--------+
+2 rows in set (0.00 sec)
+
+
+MariaDB [jabir]> savepoint s1;
+Query OK, 0 rows affected (0.00 sec)
+
+
+MariaDB [jabir]> delete from customer where 1;
+Query OK, 2 rows affected (0.00 sec)
+
+MariaDB [jabir]> select * from customer;
+Empty set (0.00 sec)
+
+MariaDB [jabir]> rollback to s1;
+Query OK, 0 rows affected (0.00 sec)
+
+MariaDB [jabir]> select * from customer;
++------+---------+--------+
+| c_id | c_name  | salary |
++------+---------+--------+
+|    1 | JabirMJ |  10000 |
+|    2 | Vaishak |  20000 |
++------+---------+--------+
+2 rows in set (0.00 sec)
+
+
