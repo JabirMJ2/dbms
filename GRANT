@@ -25,3 +25,19 @@ MariaDB [(none)]> SHOW GRANTS FOR 'jabirmj'@localhost;
 +------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 1 row in set (0.01 sec)
 
+
+
+root@student-OptiPlex-3050:/home/student# mysql -u jabirmj -p
+Enter password: 
+
+MariaDB [(none)]> use jabir;
+Reading table information for completion of table and column names
+You can turn off this feature to get a quicker startup with -A
+
+Database changed
+MariaDB [jabir]> create table student(rollno int, name varchar(30));
+Query OK, 0 rows affected (0.63 sec)
+
+MariaDB [jabir]> Insert into student values(1, 'JabirMJ');
+ERROR 1142 (42000): INSERT command denied to user 'jabirmj'@'localhost' for table 'student'
+
