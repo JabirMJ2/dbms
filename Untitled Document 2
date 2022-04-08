@@ -106,13 +106,15 @@ MariaDB [jabir]> select title from books where price > 500;
 +---------------+
 1 row in set (0.00 sec)
 
-
+Select * from books where title like 'B%';
 +--------+-------------+----------+-------------+------------+------+-------+
 | bookid | title       | authorid | publisherid | categoryid | year | price |
 +--------+-------------+----------+-------------+------------+------+-------+
 |      4 | Beyond 2020 |        3 |           3 |          3 | 2014 |   400 |
 +--------+-------------+----------+-------------+------------+------+-------+
 1 row in set (0.40 sec)
+
+Select title, a.name as author, p.name as publisher from books b left join author a on a.id=b.authorid left join publisher p on p.id = b.publisherid where year in (1996,1997,1998);
 
 
 MariaDB [jabir]> Select title, a.name as author, p.name as publisher from books b left join author a on a.id=b.authorid left join publisher p on p.id = b.publisherid;
