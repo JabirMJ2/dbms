@@ -1,0 +1,143 @@
+MariaDB [jabir]> create table author(id int PRIMARY KEY, name varchar(40), city varchar(30), country varchar(30));
+Query OK, 0 rows affected (0.65 sec)
+
+MariaDB [jabir]> create table publisher(id int PRIMARY KEY, name varchar(30), city varchar(30), country varchar(30));
+Query OK, 0 rows affected (0.62 sec)
+
+MariaDB [jabir]> create table category(id int PRIMARY KEY, description varchar(50));
+Query OK, 0 rows affected (0.23 sec)
+
+MariaDB [jabir]> create table books(bookid int, title varchar(30), authorid int references author.id, publisherid int references publisher.id, categoryid int references category.id, year int,  price int);
+Query OK, 0 rows affected (0.57 sec)
+
+MariaDB [jabir]> insert into author(name, city, country) values('Dan Brown', 'Exeter', 'USA'),('Chetan bhagath', 'Delhi', 'India'),('APJ Abdul Kalam', 'Tamil Nadu', 'India');
+ERROR 1062 (23000): Duplicate entry '0' for key 'PRIMARY'
+MariaDB [jabir]> insert into author values(1,'Dan Brown', 'Exeter', 'USA'),(2,'Chetan bhagath', 'Delhi', 'India'),(3,'APJ Abdul Kalam', 'Tamil Nadu', 'India');
+Query OK, 3 rows affected (0.03 sec)
+Records: 3  Duplicates: 0  Warnings: 0
+
+MariaDB [jabir]> insert into publisher values(1,'Simon & Schuster', 'New York', 'USA'), (2,'Rupa Publications', 'Delhi', 'India'), (3,'Harper Collins', 'New York', 'USA
+    '> ');
+Query OK, 3 rows affected (0.05 sec)
+Records: 3  Duplicates: 0  Warnings: 0
+
+
+MariaDB [jabir]> Insert into category values(1, 'Mystery'),(2,'Fiction'),(3,'Autobiography');
+Query OK, 3 rows affected (0.08 sec)
+Records: 3  Duplicates: 0  Warnings: 0
+
+MariaDB [jabir]> Insert into books values(1, 'Da Vinci Code', 1,1,1,2003,601),(2,'2 States', 2,2,2,2009,171),(3, 'Wings Of Fire', 3,3,3, 1998, 275);
+Query OK, 3 rows affected (0.10 sec)
+Records: 3  Duplicates: 0  Warnings: 0
+
+MariaDB [jabir]> Select * from books b left join author a on a.id=b.authorid left join publisher p on p.id = b.publisherid left join category c on c.id=b.categoryid;
++--------+---------------+----------+-------------+------------+------+-------+------+-----------------+------------+---------+------+-------------------+----------+---------+------+---------------+
+| bookid | title         | authorid | publisherid | categoryid | year | price | id   | name            | city       | country | id   | name              | city     | country | id   | description   |
++--------+---------------+----------+-------------+------------+------+-------+------+-----------------+------------+---------+------+-------------------+----------+---------+------+---------------+
+|      1 | Da Vinci Code |        1 |           1 |          1 | 2003 |   601 |    1 | Dan Brown       | Exeter     | USA     |    1 | Simon & Schuster  | New York | USA     |    1 | Mystery       |
+|      2 | 2 States      |        2 |           2 |          2 | 2009 |   171 |    2 | Chetan bhagath  | Delhi      | India   |    2 | Rupa Publications | Delhi    | India   |    2 | Fiction       |
+|      3 | Wings Of Fire |        3 |           3 |          3 | 1998 |   275 |    3 | APJ Abdul Kalam | Tamil Nadu | India   |    3 | Harper Collins    | New York | USA
+    |    3 | Autobiography |
+|      4 | Beyond 2020   |        3 |           3 |          3 | 2014 |   400 |    3 | APJ Abdul Kalam | Tamil Nadu | India   |    3 | Harper Collins    | New York | USA
+    |    3 | Autobiography |
++--------+---------------+----------+-------------+------------+------+-------+------+-----------------+------------+---------+------+-------------------+----------+---------+------+---------------+
+4 rows in set (0.02 sec)
+
+
+MariaDB [jabir]> alter table books Modify bookid int PRIMARY KEY AUTO_INCREMENT;
+Query OK, 3 rows affected (0.67 sec)               
+Records: 3  Duplicates: 0  Warnings: 0
+
+MariaDB [jabir]> desc books;
++-------------+-------------+------+-----+---------+----------------+
+| Field       | Type        | Null | Key | Default | Extra          |
++-------------+-------------+------+-----+---------+----------------+
+| bookid      | int(11)     | NO   | PRI | NULL    | auto_increment |
+| title       | varchar(30) | YES  |     | NULL    |                |
+| authorid    | int(11)     | YES  |     | NULL    |                |
+| publisherid | int(11)     | YES  |     | NULL    |                |
+| categoryid  | int(11)     | YES  |     | NULL    |                |
+| year        | int(11)     | YES  |     | NULL    |                |
+| price       | int(11)     | YES  |     | NULL    |                |
++-------------+-------------+------+-----+---------+----------------+
+7 rows in set (0.03 sec)
+
+MariaDB [jabir]> select * from books;
++--------+---------------+----------+-------------+------------+------+-------+
+| bookid | title         | authorid | publisherid | categoryid | year | price |
++--------+---------------+----------+-------------+------------+------+-------+
+|      1 | Da Vinci Code |        1 |           1 |          1 | 2003 |   601 |
+|      2 | 2 States      |        2 |           2 |          2 | 2009 |   171 |
+|      3 | Wings Of Fire |        3 |           3 |          3 | 1998 |   275 |
+|      4 | Beyond 2020   |        3 |           3 |          3 | 2014 |   400 |
++--------+---------------+----------+-------------+------------+------+-------+
+4 rows in set (0.00 sec)
+
+
+
+MariaDB [jabir]> select bookid, title, price from books;
++--------+---------------+-------+
+| bookid | title         | price |
++--------+---------------+-------+
+|      1 | Da Vinci Code |   601 |
+|      2 | 2 States      |   171 |
+|      3 | Wings Of Fire |   275 |
+|      4 | Beyond 2020   |   400 |
++--------+---------------+-------+
+4 rows in set (0.00 sec)
+
+
+MariaDB [jabir]> Select title from books b left join category c on b.categoryid= c.id where c.description != 'Fiction';
++---------------+
+| title         |
++---------------+
+| Da Vinci Code |
+| Wings Of Fire |
+| Beyond 2020   |
++---------------+
+3 rows in set (0.00 sec)
+
+
+MariaDB [jabir]> select title from books where price > 500;
++---------------+
+| title         |
++---------------+
+| Da Vinci Code |
++---------------+
+1 row in set (0.00 sec)
+
+
++--------+-------------+----------+-------------+------------+------+-------+
+| bookid | title       | authorid | publisherid | categoryid | year | price |
++--------+-------------+----------+-------------+------------+------+-------+
+|      4 | Beyond 2020 |        3 |           3 |          3 | 2014 |   400 |
++--------+-------------+----------+-------------+------------+------+-------+
+1 row in set (0.40 sec)
+
+
+MariaDB [jabir]> Select title, a.name as author, p.name as publisher from books b left join author a on a.id=b.authorid left join publisher p on p.id = b.publisherid;
++---------------+-----------------+-------------------+
+| title         | author          | publisher         |
++---------------+-----------------+-------------------+
+| Da Vinci Code | Dan Brown       | Simon & Schuster  |
+| 2 States      | Chetan bhagath  | Rupa Publications |
+| Wings Of Fire | APJ Abdul Kalam | Harper Collins    |
+| Beyond 2020   | APJ Abdul Kalam | Harper Collins    |
++---------------+-----------------+-------------------+
+4 rows in set (0.00 sec)
+
+
+
+
+MariaDB [jabir]> select * from books where price>600 and price<800;
++--------+---------------+----------+-------------+------------+------+-------+
+| bookid | title         | authorid | publisherid | categoryid | year | price |
++--------+---------------+----------+-------------+------------+------+-------+
+|      1 | Da Vinci Code |        1 |           1 |          1 | 2003 |   601 |
++--------+---------------+----------+-------------+------------+------+-------+
+1 row in set (0.00 sec)
+
+
+
+
+
