@@ -79,7 +79,7 @@ MariaDB [CO1]> select e.emp_name, p.department from Employee e left join Project
 +-----------+-------------+
 6 rows in set (0.01 sec)
 
-MariaDB [CO1]> select e.emp_name, p.department from Employee e outer join Project p on p.emp_id = e.emp_id;
+MariaDB [CO1]> select e.emp_name, p.department from Employee e right join Project p on p.emp_id = e.emp_id;
 +-----------+-------------+
 | emp_name  | department  |
 +-----------+-------------+
