@@ -1,0 +1,92 @@
+MariaDB [CO1]> create table Employee(
+    -> emp_id int PRIMARY KEY AUTO_INCREMENT,
+    -> emp_name varchar(30),
+    -> city varchar(25),
+    -> salary int,
+    -> age int
+    -> );
+
+MariaDB [(none)]> create table Project(
+    -> project_no int PRIMARY KEY AUTO_INCREMENT,
+    -> emp_id int references Employee.emp_id,
+    -> department varchar(30));
+
+
+Database changed
+MariaDB [CO1]> insert into Employee values(1, 'Angelina', 'Chicago', 200000, 30), (2, 'Robert', 'Austin', 300000, 26),
+    -> (3, 'Christian', 'Denver', 100000, 42),
+    -> (4, 'Kristen', 'Washington', 500000, 29),
+    -> (5, 'Russel', 'Los angels', 200000, 36),
+    -> (6, 'Marry', 'Canada', 600000, 48);
+Query OK, 6 rows affected (0.04 sec)
+Records: 6  Duplicates: 0  Warnings: 0
+
+MariaDB [CO1]> insert into Project values
+    -> (101, 1, 'Testing'),
+    -> (102, 2, 'Development'),
+    -> (103, 3, 'Designing'),
+    -> (104, 4, 'Development');
+
+
+
+MariaDB [CO1]> select * from Employee;
++--------+-----------+------------+--------+------+
+| emp_id | emp_name  | city       | salary | age  |
++--------+-----------+------------+--------+------+
+|      1 | Angelina  | Chicago    | 200000 |   30 |
+|      2 | Robert    | Austin     | 300000 |   26 |
+|      3 | Christian | Denver     | 100000 |   42 |
+|      4 | Kristen   | Washington | 500000 |   29 |
+|      5 | Russel    | Los angels | 200000 |   36 |
+|      6 | Marry     | Canada     | 600000 |   48 |
++--------+-----------+------------+--------+------+
+6 rows in set (0.00 sec)
+
+MariaDB [CO1]> select * from Project;
++------------+--------+-------------+
+| project_no | emp_id | department  |
++------------+--------+-------------+
+|        101 |      1 | Testing     |
+|        102 |      2 | Development |
+|        103 |      3 | Designing   |
+|        104 |      4 | Development |
++------------+--------+-------------+
+4 rows in set (0.00 sec)
+
+
+MariaDB [CO1]> select e.emp_name, p.department from Employee e inner join Project p on p.emp_id = e.emp_id;
++-----------+-------------+
+| emp_name  | department  |
++-----------+-------------+
+| Angelina  | Testing     |
+| Robert    | Development |
+| Christian | Designing   |
+| Kristen   | Development |
++-----------+-------------+
+4 rows in set (0.02 sec)
+
+
+MariaDB [CO1]> select e.emp_name, p.department from Employee e left join Project p on p.emp_id = e.emp_id;
++-----------+-------------+
+| emp_name  | department  |
++-----------+-------------+
+| Angelina  | Testing     |
+| Robert    | Development |
+| Christian | Designing   |
+| Kristen   | Development |
+| Russel    | NULL        |
+| Marry     | NULL        |
++-----------+-------------+
+6 rows in set (0.01 sec)
+
+MariaDB [CO1]> select e.emp_name, p.department from Employee e outer join Project p on p.emp_id = e.emp_id;
++-----------+-------------+
+| emp_name  | department  |
++-----------+-------------+
+| Angelina  | Testing     |
+| Robert    | Development |
+| Christian | Designing   |
+| Kristen   | Development |
++-----------+-------------+
+4 rows in set (0.00 sec)
+

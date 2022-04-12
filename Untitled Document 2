@@ -140,6 +140,16 @@ MariaDB [jabir]> select * from books where price>600 and price<800;
 1 row in set (0.00 sec)
 
 
+MariaDB [jabir]> select * from author order by name desc;
++----+-----------------+------------+---------+
+| id | name            | city       | country |
++----+-----------------+------------+---------+
+|  1 | Dan Brown       | Exeter     | USA     |
+|  2 | Chetan bhagath  | Delhi      | India   |
+|  3 | APJ Abdul Kalam | Tamil Nadu | India   |
++----+-----------------+------------+---------+
+3 rows in set (0.01 sec)
+
 
 
 
