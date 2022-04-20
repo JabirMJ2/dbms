@@ -1,0 +1,436 @@
+MariaDB [C01_2]> create table loans(AccN int PRIMARY KEY AUTO_INCREMENT, Cust_Name varchar(30), Loan_Amount long, Instalments int, Int_Rate decimal(10,2 ), Start_Date date, Interest int);
+
+
+MariaDB [C01_2]> Insert into loans values (1, 'R.K. Gupta', 300000, 36, 12.00, '2009-07-19', 1200), (2, 'S.P. Sharma', 500000, 48, 10.00, '2008-03-22', 1800), (3, 'K.P, Jain', 300000, 36, NULL, '08-03-2007', 1600), (4, 'M.P. Yadav', 800000, 60, 10, '2008-12-06', 2250), (5, 'S.P. Sinha', 200000, 36, 12.50, '2010-01-03', 4500), (6, 'P. Sharma', 700000, 60, 12.50, '2008-06-05', 3500), (7, 'K.S. Dhall', 500000, 48, NULL, '2008-03-05', 3800);
+Query OK, 7 rows affected, 1 warning (0.04 sec)
+Records: 7  Duplicates: 0  Warnings: 1
+
+MariaDB [C01_2]> select * from loans;
++------+-------------+-------------+-------------+----------+------------+----------+
+| AccN | Cust_Name   | Loan_Amount | Instalments | Int_Rate | Start_Date | Interest |
++------+-------------+-------------+-------------+----------+------------+----------+
+|    1 | R.K. Gupta  | 300000      |          36 |    12.00 | 2009-07-19 |     1200 |
+|    2 | S.P. Sharma | 500000      |          48 |    10.00 | 2008-03-22 |     1800 |
+|    3 | K.P, Jain   | 300000      |          36 |     NULL | 0000-00-00 |     1600 |
+|    4 | M.P. Yadav  | 800000      |          60 |    10.00 | 2008-12-06 |     2250 |
+|    5 | S.P. Sinha  | 200000      |          36 |    12.50 | 2010-01-03 |     4500 |
+|    6 | P. Sharma   | 700000      |          60 |    12.50 | 2008-06-05 |     3500 |
+|    7 | K.S. Dhall  | 500000      |          48 |     NULL | 2008-03-05 |     3800 |
++------+-------------+-------------+-------------+----------+------------+----------+
+7 rows in set (0.00 sec)
+
+
+
+MariaDB [C01_2]> select AccN, Cust_Name, Loan_Amount from loans;
++------+-------------+-------------+
+| AccN | Cust_Name   | Loan_Amount |
++------+-------------+-------------+
+|    1 | R.K. Gupta  | 300000      |
+|    2 | S.P. Sharma | 500000      |
+|    3 | K.P, Jain   | 300000      |
+|    4 | M.P. Yadav  | 800000      |
+|    5 | S.P. Sinha  | 200000      |
+|    6 | P. Sharma   | 700000      |
+|    7 | K.S. Dhall  | 500000      |
++------+-------------+-------------+
+7 rows in set (0.00 sec)
+
+MariaDB [C01_2]> select * from loans where Instalments < 40;
++------+------------+-------------+-------------+----------+------------+----------+
+| AccN | Cust_Name  | Loan_Amount | Instalments | Int_Rate | Start_Date | Interest |
++------+------------+-------------+-------------+----------+------------+----------+
+|    1 | R.K. Gupta | 300000      |          36 |    12.00 | 2009-07-19 |     1200 |
+|    3 | K.P, Jain  | 300000      |          36 |     NULL | 0000-00-00 |     1600 |
+|    5 | S.P. Sinha | 200000      |          36 |    12.50 | 2010-01-03 |     4500 |
++------+------------+-------------+-------------+----------+------------+----------+
+3 rows in set (0.00 sec)
+
+MariaDB [C01_2]> select AccN, Loan_Amount from loans where Start_Date < '2009-04-01';
++------+-------------+
+| AccN | Loan_Amount |
++------+-------------+
+|    2 | 500000      |
+|    3 | 300000      |
+|    4 | 800000      |
+|    6 | 700000      |
+|    7 | 500000      |
++------+-------------+
+5 rows in set (0.00 sec)
+
+MariaDB [C01_2]> select Int_Rate from loans where Start_Date < '2009-04-01';
++----------+
+| Int_Rate |
++----------+
+|    10.00 |
+|     NULL |
+|    10.00 |
+|    12.50 |
+|     NULL |
++----------+
+5 rows in set (0.00 sec)
+
+
+MariaDB [C01_2]> select * from loans where Int_Rate is NULL;
++------+------------+-------------+-------------+----------+------------+----------+
+| AccN | Cust_Name  | Loan_Amount | Instalments | Int_Rate | Start_Date | Interest |
++------+------------+-------------+-------------+----------+------------+----------+
+|    3 | K.P, Jain  | 300000      |          36 |     NULL | 0000-00-00 |     1600 |
+|    7 | K.S. Dhall | 500000      |          48 |     NULL | 2008-03-05 |     3800 |
++------+------------+-------------+-------------+----------+------------+----------+
+2 rows in set (0.00 sec)
+
+MariaDB [C01_2]> select * from loans where Int_Rate is not NULL;
++------+-------------+-------------+-------------+----------+------------+----------+
+| AccN | Cust_Name   | Loan_Amount | Instalments | Int_Rate | Start_Date | Interest |
++------+-------------+-------------+-------------+----------+------------+----------+
+|    1 | R.K. Gupta  | 300000      |          36 |    12.00 | 2009-07-19 |     1200 |
+|    2 | S.P. Sharma | 500000      |          48 |    10.00 | 2008-03-22 |     1800 |
+|    4 | M.P. Yadav  | 800000      |          60 |    10.00 | 2008-12-06 |     2250 |
+|    5 | S.P. Sinha  | 200000      |          36 |    12.50 | 2010-01-03 |     4500 |
+|    6 | P. Sharma   | 700000      |          60 |    12.50 | 2008-06-05 |     3500 |
++------+-------------+-------------+-------------+----------+------------+----------+
+5 rows in set (0.00 sec)
+
+
+MariaDB [C01_2]> select distinct(Loan_Amount) from loans;
++-------------+
+| Loan_Amount |
++-------------+
+| 300000      |
+| 500000      |
+| 800000      |
+| 200000      |
+| 700000      |
++-------------+
+5 rows in set (0.40 sec)
+
+
+MariaDB [C01_2]> select distinct(Instalments) from loans;
++-------------+
+| Instalments |
++-------------+
+|          36 |
+|          48 |
+|          60 |
++-------------+
+3 rows in set (0.00 sec)
+
+
+MariaDB [C01_2]> select * from loans where Start_Date > '2008-12-31' and Instalments > 36;
+Empty set (0.00 sec)
+
+
+MariaDB [C01_2]> select Cust_Name, Loan_Amount from loans where Instalments!=36;
++-------------+-------------+
+| Cust_Name   | Loan_Amount |
++-------------+-------------+
+| S.P. Sharma | 500000      |
+| M.P. Yadav  | 800000      |
+| P. Sharma   | 700000      |
+| K.S. Dhall  | 500000      |
++-------------+-------------+
+4 rows in set (0.00 sec)
+
+
+MariaDB [C01_2]> select Cust_Name, Loan_Amount from loans where Loan_Amount< 500000 or Int_Rate > 12
+    -> ;
++------------+-------------+
+| Cust_Name  | Loan_Amount |
++------------+-------------+
+| R.K. Gupta | 300000      |
+| K.P, Jain  | 300000      |
+| S.P. Sinha | 200000      |
+| P. Sharma  | 700000      |
++------------+-------------+
+4 rows in set (0.00 sec)
+
+
+
+
+MariaDB [C01_2]> select * from loans where Loan_Amount between 400000 and 500000;
++------+-------------+-------------+-------------+----------+------------+----------+
+| AccN | Cust_Name   | Loan_Amount | Instalments | Int_Rate | Start_Date | Interest |
++------+-------------+-------------+-------------+----------+------------+----------+
+|    2 | S.P. Sharma | 500000      |          48 |    10.00 | 2008-03-22 |     1800 |
+|    7 | K.S. Dhall  | 500000      |          48 |     NULL | 2008-03-05 |     3800 |
++------+-------------+-------------+-------------+----------+------------+----------+
+2 rows in set (0.00 sec)
+
+MariaDB [C01_2]> select * from loans where Int_Rate between 11 and 12;
++------+------------+-------------+-------------+----------+------------+----------+
+| AccN | Cust_Name  | Loan_Amount | Instalments | Int_Rate | Start_Date | Interest |
++------+------------+-------------+-------------+----------+------------+----------+
+|    1 | R.K. Gupta | 300000      |          36 |    12.00 | 2009-07-19 |     1200 |
++------+------------+-------------+-------------+----------+------------+----------+
+1 row in set (0.00 sec)
+
+
+
+MariaDB [C01_2]> select Cust_Name, Loan_Amount from loans where Instalments IN (24, 36, 48);
+
++-------------+-------------+
+| Cust_Name   | Loan_Amount |
++-------------+-------------+
+| R.K. Gupta  | 300000      |
+| S.P. Sharma | 500000      |
+| K.P, Jain   | 300000      |
+| S.P. Sinha  | 200000      |
+| K.S. Dhall  | 500000      |
++-------------+-------------+
+5 rows in set (0.00 sec)
+
+MariaDB [C01_2]> Select AccN, Cust_Name, Loan_Amount from loans where Cust_Name Like '%a%';
++------+-------------+-------------+
+| AccN | Cust_Name   | Loan_Amount |
++------+-------------+-------------+
+|    1 | R.K. Gupta  | 300000      |
+|    2 | S.P. Sharma | 500000      |
+|    3 | K.P, Jain   | 300000      |
+|    4 | M.P. Yadav  | 800000      |
+|    5 | S.P. Sinha  | 200000      |
+|    6 | P. Sharma   | 700000      |
+|    7 | K.S. Dhall  | 500000      |
++------+-------------+-------------+
+7 rows in set (0.00 sec)
+
+
+
+MariaDB [C01_2]> Select AccN, Cust_Name, Loan_Amount from loans where Cust_Name Like '%Sharma';
++------+-------------+-------------+
+| AccN | Cust_Name   | Loan_Amount |
++------+-------------+-------------+
+|    2 | S.P. Sharma | 500000      |
+|    6 | P. Sharma   | 700000      |
++------+-------------+-------------+
+2 rows in set (0.00 sec)
+
+
+
+MariaDB [C01_2]> Select AccN, Cust_Name, Loan_Amount from loans where Cust_Name Like '%a%';
++------+-------------+-------------+
+| AccN | Cust_Name   | Loan_Amount |
++------+-------------+-------------+
+|    1 | R.K. Gupta  | 300000      |
+|    2 | S.P. Sharma | 500000      |
+|    3 | K.P, Jain   | 300000      |
+|    4 | M.P. Yadav  | 800000      |
+|    5 | S.P. Sinha  | 200000      |
+|    6 | P. Sharma   | 700000      |
+|    7 | K.S. Dhall  | 500000      |
++------+-------------+-------------+
+7 rows in set (0.00 sec)
+
+
+
+MariaDB [C01_2]> Select AccN, Cust_Name, Loan_Amount from loans where Cust_Name not Like '%P%';
++------+------------+-------------+
+| AccN | Cust_Name  | Loan_Amount |
++------+------------+-------------+
+|    7 | K.S. Dhall | 500000      |
++------+------------+-------------+
+1 row in set (0.00 sec)
+
+
+MariaDB [C01_2]> Select AccN, Cust_Name, Loan_Amount from loans where Cust_Name Like '%a';
++------+-------------+-------------+
+| AccN | Cust_Name   | Loan_Amount |
++------+-------------+-------------+
+|    1 | R.K. Gupta  | 300000      |
+|    2 | S.P. Sharma | 500000      |
+|    5 | S.P. Sinha  | 200000      |
+|    6 | P. Sharma   | 700000      |
++------+-------------+-------------+
+4 rows in set (0.00 sec)
+
+MariaDB [C01_2]> Select AccN, Cust_Name, Loan_Amount from loans where Cust_Name Like '%a_';
++------+------------+-------------+
+| AccN | Cust_Name  | Loan_Amount |
++------+------------+-------------+
+|    4 | M.P. Yadav | 800000      |
++------+------------+-------------+
+1 row in set (0.00 sec)
+
+MariaDB [C01_2]> select * from loans order by Loan_Amount asc;
++------+-------------+-------------+-------------+----------+------------+----------+
+| AccN | Cust_Name   | Loan_Amount | Instalments | Int_Rate | Start_Date | Interest |
++------+-------------+-------------+-------------+----------+------------+----------+
+|    5 | S.P. Sinha  | 200000      |          36 |    12.50 | 2010-01-03 |     4500 |
+|    1 | R.K. Gupta  | 300000      |          36 |    12.00 | 2009-07-19 |     1200 |
+|    3 | K.P, Jain   | 300000      |          36 |     NULL | 0000-00-00 |     1600 |
+|    2 | S.P. Sharma | 500000      |          48 |    10.00 | 2008-03-22 |     1800 |
+|    7 | K.S. Dhall  | 500000      |          48 |     NULL | 2008-03-05 |     3800 |
+|    6 | P. Sharma   | 700000      |          60 |    12.50 | 2008-06-05 |     3500 |
+|    4 | M.P. Yadav  | 800000      |          60 |    10.00 | 2008-12-06 |     2250 |
++------+-------------+-------------+-------------+----------+------------+----------+
+7 rows in set (0.00 sec)
+
+
+MariaDB [C01_2]> select * from loans order by Start_Date desc;
++------+-------------+-------------+-------------+----------+------------+----------+
+| AccN | Cust_Name   | Loan_Amount | Instalments | Int_Rate | Start_Date | Interest |
++------+-------------+-------------+-------------+----------+------------+----------+
+|    5 | S.P. Sinha  | 200000      |          36 |    12.50 | 2010-01-03 |     4500 |
+|    1 | R.K. Gupta  | 300000      |          36 |    12.00 | 2009-07-19 |     1200 |
+|    4 | M.P. Yadav  | 800000      |          60 |    10.00 | 2008-12-06 |     2250 |
+|    6 | P. Sharma   | 700000      |          60 |    12.50 | 2008-06-05 |     3500 |
+|    2 | S.P. Sharma | 500000      |          48 |    10.00 | 2008-03-22 |     1800 |
+|    7 | K.S. Dhall  | 500000      |          48 |     NULL | 2008-03-05 |     3800 |
+|    3 | K.P, Jain   | 300000      |          36 |     NULL | 0000-00-00 |     1600 |
++------+-------------+-------------+-------------+----------+------------+----------+
+7 rows in set (0.00 sec)
+
+
+MariaDB [C01_2]> update loans set Int_Rate = 11.50 where Int_Rate is NULL;
+Query OK, 2 rows affected (0.03 sec)
+Rows matched: 2  Changed: 2  Warnings: 0
+
+
+MariaDB [C01_2]> select AccN, Int_Rate from loans;
++------+----------+
+| AccN | Int_Rate |
++------+----------+
+|    1 |    12.00 |
+|    2 |    10.00 |
+|    3 |    11.50 |
+|    4 |    10.00 |
+|    5 |    12.50 |
+|    6 |    12.50 |
+|    7 |    11.50 |
++------+----------+
+7 rows in set (0.00 sec)
+
+
+
+MariaDB [C01_2]> update loans set Int_Rate = Int_Rate + 0.5 where Loan_Amount>400000;
+Query OK, 4 rows affected (0.04 sec)
+Rows matched: 4  Changed: 4  Warnings: 0
+
+MariaDB [C01_2]> select AccN, Int_Rate from loans;
++------+----------+
+| AccN | Int_Rate |
++------+----------+
+|    1 |    12.00 |
+|    2 |    10.50 |
+|    3 |    11.50 |
+|    4 |    10.50 |
+|    5 |    12.50 |
+|    6 |    13.00 |
+|    7 |    12.00 |
++------+----------+
+7 rows in set (0.00 sec)
+
+update loans set Interest = (Loan_Amount*Int_Rate*Instalments)/(12*100);
+
+MariaDB [C01_2]> select AccN, Interest from loans;
++------+----------+
+| AccN | Interest |
++------+----------+
+|    1 |   108000 |
+|    2 |   210000 |
+|    3 |   103500 |
+|    4 |   420000 |
+|    5 |    75000 |
+|    6 |   455000 |
+|    7 |   240000 |
++------+----------+
+7 rows in set (0.00 sec)
+
+MariaDB [C01_2]> delete from loans where Cust_Name= 'K.P, Jain';
+Query OK, 1 row affected (0.03 sec)
+
+MariaDB [C01_2]> select AccN, Cust_Name from loans where Cust_Name='K.P, Jain';
+Empty set (0.00 sec)
+
+
+MariaDB [C01_2]> alter table loans add Category char(1);
+Query OK, 0 rows affected (0.41 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+
+MariaDB [C01_2]> desc loans;
++-------------+---------------+------+-----+---------+----------------+
+| Field       | Type          | Null | Key | Default | Extra          |
++-------------+---------------+------+-----+---------+----------------+
+| AccN        | int(11)       | NO   | PRI | NULL    | auto_increment |
+| Cust_Name   | varchar(30)   | YES  |     | NULL    |                |
+| Loan_Amount | mediumtext    | YES  |     | NULL    |                |
+| Instalments | int(11)       | YES  |     | NULL    |                |
+| Int_Rate    | decimal(10,2) | YES  |     | NULL    |                |
+| Start_Date  | date          | YES  |     | NULL    |                |
+| Interest    | int(11)       | YES  |     | NULL    |                |
+| Category    | char(1)       | YES  |     | NULL    |                |
++-------------+---------------+------+-----+---------+----------------+
+8 rows in set (0.00 sec)
+
+MariaDB [C01_2]> select sum(Loan_Amount) from loans where Int_Rate>10;
++------------------+
+| sum(Loan_Amount) |
++------------------+
+|          3000000 |
++------------------+
+1 row in set (0.00 sec)
+
+
+MariaDB [C01_2]> select MAX(Interest) from loans where Int_Rate>10;
++---------------+
+| MAX(Interest) |
++---------------+
+|        455000 |
++---------------+
+1 row in set (0.00 sec)
+
+
+MariaDB [C01_2]> select Count(AccN) from loans where Cust_Name like '%Sharma';
++-------------+
+| Count(AccN) |
++-------------+
+|           2 |
++-------------+
+1 row in set (0.00 sec)
+
+
+Database changed
+MariaDB [C01_2]> select Count(AccN) from loans where Interest is NULL;+-------------+
+| Count(AccN) |
++-------------+
+|           0 |
++-------------+
+1 row in set (0.00 sec)
+
+MariaDB [C01_2]> select Int_Rate ,count(AccN) from loans group by Int_Rate order by Int_Rate;
++----------+-------------+
+| Int_Rate | count(AccN) |
++----------+-------------+
+|    10.50 |           2 |
+|    12.00 |           2 |
+|    12.50 |           1 |
+|    13.00 |           1 |
++----------+-------------+
+4 rows in set (0.00 sec)
+
+MariaDB [C01_2]> select Int_Rate ,count(AccN) from loans where Instalments>10 group by Int_Rate order by Int_Rate;
++----------+-------------+
+| Int_Rate | count(AccN) |
++----------+-------------+
+|    10.50 |           2 |
+|    12.00 |           2 |
+|    12.50 |           1 |
+|    13.00 |           1 |
++----------+-------------+
+4 rows in set (0.00 sec)
+
+
+MariaDB [C01_2]> select Interest ,count(AccN) from loans where Instalments>5 group by Interest order by Interest;
++----------+-------------+
+| Interest | count(AccN) |
++----------+-------------+
+|    75000 |           1 |
+|   108000 |           1 |
+|   210000 |           1 |
+|   240000 |           1 |
+|   420000 |           1 |
+|   455000 |           1 |
++----------+-------------+
+6 rows in set (0.00 sec)
+
+
