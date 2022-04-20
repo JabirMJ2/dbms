@@ -397,7 +397,23 @@ MariaDB [C01_2]> select Count(AccN) from loans where Interest is NULL;+---------
 +-------------+
 1 row in set (0.00 sec)
 
-MariaDB [C01_2]> select Int_Rate ,count(AccN) from loans group by Int_Rate order by Int_Rate;
+MariaDB [C01_2]> select Interest ,count(AccN) from loans group by Interest order by Interest
+    -> ;
++----------+-------------+
+| Interest | count(AccN) |
++----------+-------------+
+|    75000 |           1 |
+|   108000 |           1 |
+|   210000 |           1 |
+|   240000 |           1 |
+|   420000 |           1 |
+|   455000 |           1 |
++----------+-------------+
+6 rows in set (0.00 sec)
+
+
+MariaDB [C01_2]> select Int_Rate ,count(AccN) from loans where Instalments>=10 group by Int_Rate order by Int_Rate
+    -> ;
 +----------+-------------+
 | Int_Rate | count(AccN) |
 +----------+-------------+
@@ -408,16 +424,6 @@ MariaDB [C01_2]> select Int_Rate ,count(AccN) from loans group by Int_Rate order
 +----------+-------------+
 4 rows in set (0.00 sec)
 
-MariaDB [C01_2]> select Int_Rate ,count(AccN) from loans where Instalments>10 group by Int_Rate order by Int_Rate;
-+----------+-------------+
-| Int_Rate | count(AccN) |
-+----------+-------------+
-|    10.50 |           2 |
-|    12.00 |           2 |
-|    12.50 |           1 |
-|    13.00 |           1 |
-+----------+-------------+
-4 rows in set (0.00 sec)
 
 
 MariaDB [C01_2]> select Interest ,count(AccN) from loans where Instalments>5 group by Interest order by Interest;
