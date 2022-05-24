@@ -1,0 +1,47 @@
+create table customer(id int primary key, age int, address varchar(100), salary int);
+
+insert into customer values(1, 'Jabir MJ', 24, 'Trissur', 100000); 
+insert into customer values (2, 'Vaisakh MV', 24,'Kodungalloor', 100000);
+insert into customer values(3, 'Thasni', 22, 'Irinjalakuda', 90000); 
+ insert into customer values(4, 'Hari', 23, 'Aluva',  95000); 
+insert into customer values(5, 'Reshma', 25, 'Thodupuzha', 95000);
+
+
+edit trig.sql
+
+@trig
+Trigger created.
+
+Old Salary: 105000
+New Salary: 110000
+Salary difference: 5000
+Old Salary: 105000
+New Salary: 110000
+Salary difference: 5000
+Old Salary: 95000
+New Salary: 100000
+Salary difference: 5000
+Old Salary: 100000
+New Salary: 105000
+Salary difference: 5000
+Old Salary: 100000
+New Salary: 105000
+Salary difference: 5000
+5 customers updated
+
+PL/SQL procedure successfully completed.
+
+
+SQL> insert into customer values(6, 'Devika', 25, 'Thodupuzha', 95000);
+Old Salary:
+New Salary: 95000
+Salary difference:
+
+1 row created.
+
+SQL> update customer set name = 'Jabir' where id=1;
+Old Salary: 110000
+New Salary: 110000
+Salary difference: 0
+
+1 row updated.
